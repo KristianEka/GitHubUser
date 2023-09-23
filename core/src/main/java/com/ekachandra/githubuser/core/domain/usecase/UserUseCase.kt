@@ -20,4 +20,8 @@ interface UserUseCase {
     suspend fun deleteUserFavorite(users: Users)
 
     fun getFavoriteIsExists(username: String): Flow<Boolean>
+
+    fun getThemeSetting(): Flow<Boolean>
+
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean)
 }

@@ -17,8 +17,6 @@ class DetailViewModel(
 
     fun getUserFollowing(username: String) = userUseCase.getUserFollowing(username).asLiveData()
 
-    fun getAllUserFavorite() = userUseCase.getAllUserFavorite().asLiveData()
-
     fun insertUserFavorite(user: Users) {
         viewModelScope.launch {
             userUseCase.insertUserFavorite(user)
