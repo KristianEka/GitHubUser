@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekachandra.githubuser.R
@@ -118,5 +119,17 @@ class FollowFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
 
+    override fun onPause() {
+        super.onPause()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, 0
+        )
+    }
 }
