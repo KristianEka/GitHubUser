@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -17,14 +16,13 @@ import com.ekachandra.githubuser.R
 import com.ekachandra.githubuser.core.ui.UserAdapter
 import com.ekachandra.githubuser.databinding.ActivityMainBinding
 import com.ekachandra.githubuser.presentation.detail.DetailActivity
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,12 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.favorite -> {
-//                val intent = Intent(
-//                    this,
-//                    FavoriteActivity::class.java
-//                )
-//                startActivity(intent)
-
                 val uri = Uri.parse("githubuser://favorite")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
             }

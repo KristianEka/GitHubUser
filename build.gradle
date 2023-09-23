@@ -16,8 +16,8 @@ buildscript {
     ext.logging_interceptor_version = "4.11.0"
     ext.datastore_version = "1.0.0"
     ext.room_version = "2.5.2"
-    ext.hilt_version = "2.48"
     ext.livedata_version = "2.6.2"
+    ext.koin_version = "3.5.0"
 }
 
 plugins {

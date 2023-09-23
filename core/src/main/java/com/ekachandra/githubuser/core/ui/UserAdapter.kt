@@ -12,7 +12,6 @@ import com.ekachandra.githubuser.core.domain.model.Users
 
 class UserAdapter : ListAdapter<Users, UserAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    private var listData = ArrayList<Users>()
     var onItemClick: ((Users) -> Unit)? = null
 
     companion object {

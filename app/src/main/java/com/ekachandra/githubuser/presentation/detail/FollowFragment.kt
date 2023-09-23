@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekachandra.githubuser.R
 import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.core.ui.UserAdapter
 import com.ekachandra.githubuser.databinding.FragmentFollowBinding
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class FollowFragment : Fragment() {
 
     companion object {
@@ -23,7 +21,7 @@ class FollowFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowBinding
     private lateinit var adapter: UserAdapter
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

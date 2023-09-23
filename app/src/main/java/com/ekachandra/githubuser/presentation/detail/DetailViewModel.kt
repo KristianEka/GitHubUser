@@ -5,12 +5,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.core.domain.usecase.UserUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailViewModel @Inject constructor(
+class DetailViewModel(
     private val userUseCase: UserUseCase,
 ) : ViewModel() {
 
