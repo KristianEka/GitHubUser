@@ -35,6 +35,7 @@ class FavoriteActivity : AppCompatActivity() {
             if (users.isNullOrEmpty()) {
                 adapter.submitList(null)
                 stateEmpty(true)
+                adapter.submitList(null)
             } else {
                 stateEmpty(false)
                 adapter.submitList(users)
