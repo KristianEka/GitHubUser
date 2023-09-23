@@ -33,6 +33,7 @@ class FavoriteActivity : AppCompatActivity() {
     private fun showFavoriteData() {
         favoriteViewModel.getAllUserFavorite().observe(this) { users ->
             if (users.isNullOrEmpty()) {
+                adapter.submitList(null)
                 stateEmpty(true)
             } else {
                 stateEmpty(false)
