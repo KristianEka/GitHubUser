@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="smoky_topaz">#9A3B3B</color>
+    <color name="deer">#C08261</color>
+    <color name="gold_crayola">#E2C799</color>
+    <color name="lemon_meringue">#F2ECBE</color>
+
+    <color name="prussian_blue">#053B50</color>
+    <color name="blue_sapphire">#176B87</color>
+    <color name="sea_serpent">#64CCC5</color>
+    <color name="bright_gray">#EEEEEE</color>
 </resources>

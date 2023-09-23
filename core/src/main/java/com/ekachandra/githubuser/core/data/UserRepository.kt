@@ -1,6 +1,7 @@
 package com.ekachandra.githubuser.core.data
 
 import com.ekachandra.githubuser.core.data.source.local.LocalDataSource
+import com.ekachandra.githubuser.core.data.source.local.preferences.SharedPreferences
 import com.ekachandra.githubuser.core.data.source.remote.RemoteDataSource
 import com.ekachandra.githubuser.core.data.source.remote.network.ApiResponse
 import com.ekachandra.githubuser.core.data.source.remote.response.UserResponse
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.map
 class UserRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
+    private val sharedPreferences: SharedPreferences,
 ) : IUserRepository {
 
     override fun getUsersByUsername(username: String): Flow<Resource<List<Users>>> =
@@ -81,5 +83,10 @@ class UserRepository(
 
     override fun getFavoriteIsExists(username: String): Flow<Boolean> =
         localDataSource.getFavoriteIsExists(username)
+
+    override fun getThemeSetting(): Flow<Boolean> = sharedPreferences.getThemeSetting()
+
+    override suspend fun saveThemeSetting(isDarkModeActivity: Boolean) =
+        sharedPreferences.saveThemeSetting(isDarkModeActivity)
 
 }

@@ -36,8 +36,8 @@ class DetailActivity : AppCompatActivity() {
 
         val username = intent.getStringExtra(USER)
 
-
         if (username != null) {
+            supportActionBar?.title = username
             showDetailContent(username)
             initPager(username)
         }

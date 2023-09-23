@@ -23,14 +23,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
     private val mainViewModel: MainViewModel by viewModel()
+    private val currentNightMode = AppCompatDelegate.getDefaultNightMode()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
+        stateTheme()
         setAdapter()
     }
 
@@ -59,6 +59,13 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        val themeChanger = menu.findItem(R.id.theme_changer)
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
+            themeChanger.setIcon(R.drawable.ic_light_mode_24)
+        } else {
+            themeChanger.setIcon(R.drawable.ic_dark_mode_24)
+        }
+
         return true
     }
 
@@ -69,9 +76,29 @@ class MainActivity : AppCompatActivity() {
                 val uri = Uri.parse("githubuser://favorite")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
+
+            R.id.theme_changer -> {
+                if (currentNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    mainViewModel.saveThemeSetting(true)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    mainViewModel.saveThemeSetting(false)
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun stateTheme() {
+        mainViewModel.getThemeSetting().observe(this) { isDarkModeActive ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 
     private fun setAdapter() {

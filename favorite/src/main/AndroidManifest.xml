@@ -15,7 +15,9 @@
     <application tools:ignore="MissingApplicationIcon">
         <activity
             android:name=".presentation.FavoriteActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/favorite"
+            android:parentActivityName="com.ekachandra.githubuser.presentation.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

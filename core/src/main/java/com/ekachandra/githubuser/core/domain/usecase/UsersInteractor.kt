@@ -31,4 +31,8 @@ class UsersInteractor(
     override fun getFavoriteIsExists(username: String): Flow<Boolean> =
         userRepository.getFavoriteIsExists(username)
 
+    override fun getThemeSetting(): Flow<Boolean> = userRepository.getThemeSetting()
+    override suspend fun saveThemeSetting(isDarkModeActive: Boolean) =
+        userRepository.saveThemeSetting(isDarkModeActive)
+
 }
