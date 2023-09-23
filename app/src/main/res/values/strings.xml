@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">GitHubUser</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="add_to_favorite">Add to Favorite</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="followers_count">%d Followers</string>
+    <string name="following_count">%d Following</string>
+    <string name="empty_data">Empty data</string>
+    <string name="oops_something_went_wrong">Oops.. something went wrong</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="search_username">Search by username</string>
+    <string name="theme_changer">Theme Changer</string>
+    <string name="error">Error</string>
+    <string name="select_tabs">Select tabs</string>
+    <string name="title_favorite">Favorite</string>
+</resources>
