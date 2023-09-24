@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekachandra.githubuser.core.ui.UserAdapter
+import com.ekachandra.githubuser.favorite.R
 import com.ekachandra.githubuser.favorite.databinding.ActivityFavoriteBinding
 import com.ekachandra.githubuser.favorite.di.favoriteModule
 import com.ekachandra.githubuser.presentation.detail.DetailActivity
@@ -61,6 +62,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     private fun stateEmpty(isEmpty: Boolean) {
         binding.viewEmpty.root.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.viewEmpty.tvEmpty.text = getString(R.string.mark_users_fav)
     }
 
 }

@@ -6,5 +6,7 @@
         <item name="colorPrimary">@color/blue_sapphire</item>
         <item name="colorOnPrimary">@color/bright_gray</item>
         <item name="colorOnSecondaryContainer">@color/prussian_blue</item>
+        <item name="colorSecondary">@color/sea_serpent</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
     </style>
 </resources>

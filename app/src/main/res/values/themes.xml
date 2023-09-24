@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/smoky_topaz</item>
         <item name="colorOnPrimary">@color/gold_crayola</item>
         <item name="colorOnSecondaryContainer">@color/deer</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">@color/lemon_meringue</item>
     </style>
 
     <style name="Theme.GitHubUser" parent="Base.Theme.GitHubUser" />

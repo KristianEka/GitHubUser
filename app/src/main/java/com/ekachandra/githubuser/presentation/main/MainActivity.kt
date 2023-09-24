@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        stateEmpty(true)
         stateTheme()
         setAdapter()
     }
@@ -75,9 +77,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.theme_changer -> {
                 if (isDarkMode) {
+                    showToast(getString(R.string.light_theme_is_activated))
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     mainViewModel.saveThemeSetting(false)
                 } else {
+                    showToast(getString(R.string.dark_theme_is_activated))
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     mainViewModel.saveThemeSetting(true)
                 }
@@ -153,6 +157,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun stateEmpty(isEmpty: Boolean) {
         binding.viewEmpty.root.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.viewEmpty.tvEmpty.text = getString(R.string.do_search_first)
     }
 
     private fun stateError(
@@ -167,6 +172,10 @@ class MainActivity : AppCompatActivity() {
                 viewError.root.visibility = View.GONE
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

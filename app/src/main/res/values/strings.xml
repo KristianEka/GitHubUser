@@ -23,4 +23,9 @@
     <string name="error">Error</string>
     <string name="select_tabs">Select tabs</string>
     <string name="title_favorite">Favorite</string>
+    <string name="do_search_first">No data shown, please do a search first</string>
+    <string name="successfully_deleted_fav">Successfully deleted users from the favorites list</string>
+    <string name="successfully_added_fav">Successfully added users from the favorites list</string>
+    <string name="light_theme_is_activated">Light theme is activated</string>
+    <string name="dark_theme_is_activated">Dark theme is activated</string>
 </resources>

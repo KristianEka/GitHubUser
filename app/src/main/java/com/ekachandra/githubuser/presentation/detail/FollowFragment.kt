@@ -15,11 +15,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FollowFragment : Fragment() {
 
-    companion object {
-        const val ARG_POSITION = "section_number"
-        const val ARG_USERNAME = "section_username"
-    }
-
     private lateinit var binding: FragmentFollowBinding
     private lateinit var adapter: UserAdapter
     private val detailViewModel: DetailViewModel by viewModel()
@@ -54,7 +49,20 @@ class FollowFragment : Fragment() {
                 showData(it)
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, 0
+        )
     }
 
     private fun showData(data: com.ekachandra.githubuser.core.data.Resource<List<Users>>?) {
@@ -119,17 +127,8 @@ class FollowFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, 0
-        )
+    companion object {
+        const val ARG_POSITION = "section_number"
+        const val ARG_USERNAME = "section_username"
     }
 }
