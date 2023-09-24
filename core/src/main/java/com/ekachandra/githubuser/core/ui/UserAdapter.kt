@@ -14,19 +14,6 @@ class UserAdapter : ListAdapter<Users, UserAdapter.ListViewHolder>(DIFF_CALLBACK
 
     var onItemClick: ((Users) -> Unit)? = null
 
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Users>() {
-            override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean {
-                return oldItem.login == newItem.login
-            }
-
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
@@ -55,11 +42,24 @@ class UserAdapter : ListAdapter<Users, UserAdapter.ListViewHolder>(DIFF_CALLBACK
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val clickedUse = getItem(position)
-                    onItemClick?.invoke(clickedUse)
+                    val clickedUser = getItem(position)
+                    onItemClick?.invoke(clickedUser)
                 }
 
             }
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Users>() {
+            override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean {
+                return oldItem.login == newItem.login
+            }
+
         }
     }
 }

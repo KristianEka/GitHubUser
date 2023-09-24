@@ -1,5 +1,6 @@
 package com.ekachandra.githubuser.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -81,6 +82,11 @@ class FollowFragment : Fragment() {
                     } else {
                         stateEmpty(false)
                         adapter.submitList(data.data)
+                        adapter.onItemClick = { selectedData ->
+                            val intent = Intent(requireActivity(), DetailActivity::class.java)
+                            intent.putExtra(DetailActivity.USER, selectedData.login)
+                            startActivity(intent)
+                        }
                     }
                     stateError(false)
                 }
