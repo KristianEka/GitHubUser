@@ -17,6 +17,11 @@ jobs:
           name: Check Permissions
           command: ls -l ./gradlew
       - run:
+          name: Debug Gradlew
+          command: |
+             set -x
+             ./gradlew androidDependencies
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
