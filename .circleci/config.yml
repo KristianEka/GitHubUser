@@ -1,45 +1,60 @@
-version: 2.1
- 
-orbs:
-  android: circleci/android@0.2.1
- 
+name: Android Build and Test
+
+on:
+  push:
+    branches:
+      - made-2  # Change this to your main branch name
+
 jobs:
   build:
-    executor: android/android
+    runs-on: ubuntu-latest
+
     steps:
-      - checkout
-      - restore_cache:
-          key: android-orb-v1-
-      - run:
-          name: Chmod permissions
-          command: sudo chmod +x ./gradlew
-      - run:
-          name: Check Permissions
-          command: ls -l ./gradlew
-      - run:
-          name: Debug Gradlew
-          command: |
-             set -x
-             ./gradlew androidDependencies
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-      - save_cache:
-          key: 'android-orb-v1-{{ epoch }}'
-          paths:
-            - ~/.android/build-cache
-            - ~/.android/cache
-      - run:
-          name: Run Build
-          command: ./gradlew build
-      - store_artifacts: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '18'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Download Dependencies
+        run: |
+          chmod +x ./gradlew
+          ./gradlew androidDependencies
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.android/build-cache
+            ~/.android/cache
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Store Build Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
           path: app/build/reports
-          destination: reports
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
-      - store_test_results:
+
+      - name: Run Tests
+        run: ./gradlew lint test
+
+      - name: Store Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
           path: app/build/test-results
-      - store_artifacts:  
+
+      - name: Store Debug APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: debug-apk
           path: app/build/outputs/apk/debug/
-          destination: artifact-file
