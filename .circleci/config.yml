@@ -15,7 +15,8 @@ version: 2.1
 # See: https://circleci.com/docs/orb-intro/
 
 orbs:
-  android: circleci/android@2.3.0
+
+  android: circleci/android@1.0.3
 
 # Define a job to be invoked later in a workflow.
 
@@ -112,3 +113,4 @@ workflows:
     jobs:
 
       - build
+
