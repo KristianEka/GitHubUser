@@ -3,31 +3,29 @@ package com.ekachandra.githubuser.favorite.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekachandra.githubuser.core.ui.UserAdapter
+import com.ekachandra.githubuser.favorite.R
 import com.ekachandra.githubuser.favorite.databinding.ActivityFavoriteBinding
-import com.ekachandra.githubuser.favorite.di.ViewModelFactory
+import com.ekachandra.githubuser.favorite.di.favoriteModule
 import com.ekachandra.githubuser.presentation.detail.DetailActivity
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 
 class FavoriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoriteBinding
     private lateinit var adapter: UserAdapter
 
-    @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val favoriteViewModel: FavoriteViewModel by viewModels {
-        factory
-    }
+    private val favoriteViewModel: FavoriteViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadKoinModules(favoriteModule)
 
         setAdapter()
         showFavoriteData()
@@ -36,7 +34,9 @@ class FavoriteActivity : AppCompatActivity() {
     private fun showFavoriteData() {
         favoriteViewModel.getAllUserFavorite().observe(this) { users ->
             if (users.isNullOrEmpty()) {
+                adapter.submitList(null)
                 stateEmpty(true)
+                adapter.submitList(null)
             } else {
                 stateEmpty(false)
                 adapter.submitList(users)
@@ -62,6 +62,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     private fun stateEmpty(isEmpty: Boolean) {
         binding.viewEmpty.root.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.viewEmpty.tvEmpty.text = getString(R.string.mark_users_fav)
     }
 
 }

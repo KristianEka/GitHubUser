@@ -2,7 +2,7 @@ package com.ekachandra.githubuser.presentation.detail
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,23 +13,12 @@ import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
-    companion object {
-        const val USER = "user"
-
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
-            R.string.followers_count, R.string.following_count
-        )
-
-    }
-
     private lateinit var binding: ActivityDetailBinding
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +27,8 @@ class DetailActivity : AppCompatActivity() {
 
         val username = intent.getStringExtra(USER)
 
-
         if (username != null) {
+            supportActionBar?.title = username
             showDetailContent(username)
             initPager(username)
         }
@@ -120,8 +109,10 @@ class DetailActivity : AppCompatActivity() {
 
             binding.fabFavorite.setOnClickListener {
                 if (isFavorite) {
+                    showToast(getString(R.string.successfully_deleted_fav))
                     detailViewModel.deleteUserFavorite(users)
                 } else {
+                    showToast(getString(R.string.successfully_added_fav))
                     detailViewModel.insertUserFavorite(users)
                 }
             }
@@ -149,6 +140,20 @@ class DetailActivity : AppCompatActivity() {
                 viewError.root.visibility = View.GONE
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val USER = "user"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers_count, R.string.following_count
+        )
+
     }
 
 }

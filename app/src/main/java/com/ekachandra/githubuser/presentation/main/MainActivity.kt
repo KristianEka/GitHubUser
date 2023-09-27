@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -17,22 +17,22 @@ import com.ekachandra.githubuser.R
 import com.ekachandra.githubuser.core.ui.UserAdapter
 import com.ekachandra.githubuser.databinding.ActivityMainBinding
 import com.ekachandra.githubuser.presentation.detail.DetailActivity
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModel()
+    private var isDarkMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
+        stateEmpty(true)
+        stateTheme()
         setAdapter()
     }
 
@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        val themeChanger = menu.findItem(R.id.theme_changer)
+        themeChanger.setIcon(if (isDarkMode) R.drawable.ic_light_mode_24 else R.drawable.ic_dark_mode_24)
+
         return true
     }
 
@@ -68,18 +71,35 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.favorite -> {
-//                val intent = Intent(
-//                    this,
-//                    FavoriteActivity::class.java
-//                )
-//                startActivity(intent)
-
                 val uri = Uri.parse("githubuser://favorite")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+
+            R.id.theme_changer -> {
+                if (isDarkMode) {
+                    showToast(getString(R.string.light_theme_is_activated))
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    mainViewModel.saveThemeSetting(false)
+                } else {
+                    showToast(getString(R.string.dark_theme_is_activated))
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    mainViewModel.saveThemeSetting(true)
+                }
             }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun stateTheme() {
+        mainViewModel.getThemeSetting().observe(this) { isDarkModeActive ->
+            isDarkMode = isDarkModeActive
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 
     private fun setAdapter() {
@@ -137,6 +157,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun stateEmpty(isEmpty: Boolean) {
         binding.viewEmpty.root.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.viewEmpty.tvEmpty.text = getString(R.string.do_search_first)
     }
 
     private fun stateError(
@@ -151,6 +172,10 @@ class MainActivity : AppCompatActivity() {
                 viewError.root.visibility = View.GONE
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -1,29 +1,24 @@
 package com.ekachandra.githubuser.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekachandra.githubuser.R
 import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.core.ui.UserAdapter
 import com.ekachandra.githubuser.databinding.FragmentFollowBinding
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class FollowFragment : Fragment() {
-
-    companion object {
-        const val ARG_POSITION = "section_number"
-        const val ARG_USERNAME = "section_username"
-    }
 
     private lateinit var binding: FragmentFollowBinding
     private lateinit var adapter: UserAdapter
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +50,20 @@ class FollowFragment : Fragment() {
                 showData(it)
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.rvUser.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, 0
+        )
     }
 
     private fun showData(data: com.ekachandra.githubuser.core.data.Resource<List<Users>>?) {
@@ -74,6 +82,11 @@ class FollowFragment : Fragment() {
                     } else {
                         stateEmpty(false)
                         adapter.submitList(data.data)
+                        adapter.onItemClick = { selectedData ->
+                            val intent = Intent(requireActivity(), DetailActivity::class.java)
+                            intent.putExtra(DetailActivity.USER, selectedData.login)
+                            startActivity(intent)
+                        }
                     }
                     stateError(false)
                 }
@@ -120,5 +133,8 @@ class FollowFragment : Fragment() {
         }
     }
 
-
+    companion object {
+        const val ARG_POSITION = "section_number"
+        const val ARG_USERNAME = "section_username"
+    }
 }

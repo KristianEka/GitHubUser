@@ -1,12 +1,10 @@
 package com.ekachandra.githubuser.core.domain.usecase
 
-import com.ekachandra.githubuser.core.data.Resource
 import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class UsersInteractor @Inject constructor(
+class UsersInteractor(
     private val userRepository: IUserRepository,
 ) : UserUseCase {
     override fun getUsersByUsername(username: String): Flow<com.ekachandra.githubuser.core.data.Resource<List<Users>>> =
@@ -32,5 +30,9 @@ class UsersInteractor @Inject constructor(
 
     override fun getFavoriteIsExists(username: String): Flow<Boolean> =
         userRepository.getFavoriteIsExists(username)
+
+    override fun getThemeSetting(): Flow<Boolean> = userRepository.getThemeSetting()
+    override suspend fun saveThemeSetting(isDarkModeActive: Boolean) =
+        userRepository.saveThemeSetting(isDarkModeActive)
 
 }

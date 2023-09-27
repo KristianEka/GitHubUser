@@ -2,14 +2,21 @@ package com.ekachandra.githubuser.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.ekachandra.githubuser.core.domain.usecase.UserUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.launch
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val userUseCase: UserUseCase,
 ) : ViewModel() {
 
     fun getUsersByUsername(username: String) = userUseCase.getUsersByUsername(username).asLiveData()
+
+    fun getThemeSetting() = userUseCase.getThemeSetting().asLiveData()
+
+    fun saveThemeSetting(isDarkModeActivity: Boolean) {
+        viewModelScope.launch {
+            userUseCase.saveThemeSetting(isDarkModeActivity)
+        }
+    }
 }

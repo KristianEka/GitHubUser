@@ -16,10 +16,11 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
 
-    // Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    ksp "com.google.dagger:hilt-compiler:$hilt_version"
-
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version"
+
+    // Koin
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-core:$koin_version"
+
 }

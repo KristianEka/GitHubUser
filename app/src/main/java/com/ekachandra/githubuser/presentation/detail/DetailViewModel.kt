@@ -5,12 +5,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ekachandra.githubuser.core.domain.model.Users
 import com.ekachandra.githubuser.core.domain.usecase.UserUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailViewModel @Inject constructor(
+class DetailViewModel(
     private val userUseCase: UserUseCase,
 ) : ViewModel() {
 
@@ -19,8 +16,6 @@ class DetailViewModel @Inject constructor(
     fun getUserFollowers(username: String) = userUseCase.getUserFollowers(username).asLiveData()
 
     fun getUserFollowing(username: String) = userUseCase.getUserFollowing(username).asLiveData()
-
-    fun getAllUserFavorite() = userUseCase.getAllUserFavorite().asLiveData()
 
     fun insertUserFavorite(user: Users) {
         viewModelScope.launch {

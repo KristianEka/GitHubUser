@@ -9,22 +9,22 @@ import kotlinx.coroutines.flow.map
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private var result: Flow<com.ekachandra.githubuser.core.data.Resource<ResultType>> = flow {
-        emit(com.ekachandra.githubuser.core.data.Resource.Loading())
+    private var result: Flow<Resource<ResultType>> = flow {
+        emit(Resource.Loading())
         when (val apiResponse = createCall().first()) {
             is ApiResponse.Success -> {
                 emitAll(loadFromNetwork(apiResponse.data).map {
-                    com.ekachandra.githubuser.core.data.Resource.Success(it)
+                    Resource.Success(it)
                 })
             }
 
             is ApiResponse.Empty -> {
-                com.ekachandra.githubuser.core.data.Resource.Success(null)
+                Resource.Success(null)
             }
 
             is ApiResponse.Error -> {
                 onFetchFailed()
-                emit(com.ekachandra.githubuser.core.data.Resource.Error(apiResponse.errorMessage))
+                emit(Resource.Error(apiResponse.errorMessage))
             }
 
         }
@@ -36,5 +36,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun createCall(): Flow<ApiResponse<RequestType>>
 
-    fun asFlow(): Flow<com.ekachandra.githubuser.core.data.Resource<ResultType>> = result
+    fun asFlow(): Flow<Resource<ResultType>> = result
 }

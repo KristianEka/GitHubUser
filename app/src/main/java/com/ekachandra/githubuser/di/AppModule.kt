@@ -2,17 +2,16 @@ package com.ekachandra.githubuser.di
 
 import com.ekachandra.githubuser.core.domain.usecase.UserUseCase
 import com.ekachandra.githubuser.core.domain.usecase.UsersInteractor
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import com.ekachandra.githubuser.presentation.detail.DetailViewModel
+import com.ekachandra.githubuser.presentation.main.MainViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class AppModule {
+val useCaseModule = module {
+    factory<UserUseCase> { UsersInteractor(get()) }
+}
 
-    @Binds
-    @ViewModelScoped
-    abstract fun provideUserUseCase(usersInteractor: UsersInteractor): UserUseCase
+val viewModelModule = module {
+    viewModel { MainViewModel(get()) }
+    viewModel { DetailViewModel(get()) }
 }
