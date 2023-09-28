@@ -23,14 +23,12 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             }
 
             is ApiResponse.Error -> {
-                onFetchFailed()
                 emit(Resource.Error(apiResponse.errorMessage))
             }
 
         }
     }
 
-    protected open fun onFetchFailed() {}
 
     protected abstract fun loadFromNetwork(data: RequestType): Flow<ResultType>
 

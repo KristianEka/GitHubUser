@@ -37,7 +37,7 @@
 
     <include
         android:id="@+id/view_empty"
-        layout="@layout/view_empty"
+        layout="@layout/view_empty_app"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
