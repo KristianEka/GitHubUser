@@ -58,4 +58,8 @@ dependencies {
 
     // LiveData
     api "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version"
+
+    // SQLCipher
+    implementation "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
+    implementation "androidx.sqlite:sqlite-ktx:$sqlite_version"
 }

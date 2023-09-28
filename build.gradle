@@ -19,6 +19,8 @@ buildscript {
     ext.livedata_version = "2.6.2"
     ext.koin_version = "3.5.0"
     ext.leak_canary_version = "2.12"
+    ext.sqlcipher_version = "4.4.0"
+    ext.sqlite_version = "2.3.1"
 }
 
 plugins {
