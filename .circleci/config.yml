@@ -55,6 +55,12 @@ jobs:
           name: Chmod permissions
 
           command: sudo chmod +x ./gradlew
+      
+      - run:
+
+          name: Make gradlew executable
+
+          command: chmod +x ./gradlew
 
       - run:
 
